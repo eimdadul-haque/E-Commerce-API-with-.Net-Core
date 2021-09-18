@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Models_Library.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace OnlineShop_API.Data
 {
@@ -13,5 +10,8 @@ namespace OnlineShop_API.Data
         {
 
         }
+
+        public DbSet<ProductModel> product { get; set; }
+        public DbSet<ProductTypeModel> productType { get; set; }
     }
 }
