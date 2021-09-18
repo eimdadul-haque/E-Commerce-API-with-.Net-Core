@@ -9,6 +9,8 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using OnlineShop_API.Data;
+using OnlineShop_API.IRepository;
+using OnlineShop_API.Repository;
 using System;
 using System.IO;
 using System.Text;
@@ -60,6 +62,9 @@ namespace OnlineShop_API
                     
                 };
             });
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider service)

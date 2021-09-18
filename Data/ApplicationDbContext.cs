@@ -1,6 +1,6 @@
-﻿using Models_Library.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using OnlineShop_API.Models;
 
 namespace OnlineShop_API.Data
 {

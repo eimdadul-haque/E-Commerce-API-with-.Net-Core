@@ -6,9 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="IRepository\" />
     <Folder Include="Images\" />
-    <Folder Include="Repository\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,10 +18,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Models-Library\Models-Library.csproj" />
   </ItemGroup>
 
 </Project>
