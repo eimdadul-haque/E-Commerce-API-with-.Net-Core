@@ -65,6 +65,17 @@ namespace OnlineShop_API
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
+
+
+            services.AddCors(options=>
+            {
+                options.AddDefaultPolicy(builder=>
+                {
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyOrigin();
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider service)
@@ -81,7 +92,7 @@ namespace OnlineShop_API
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Images")),
                 RequestPath = "/Images"
             }) ;
-
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -98,18 +109,40 @@ namespace OnlineShop_API
             var userManager = service.GetRequiredService<UserManager<IdentityUser>>();
             var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
 
-            var isRoleExists = await roleManager.RoleExistsAsync("Admin");
+
+            var isUserRoleExists = await roleManager.RoleExistsAsync("User");
+            var isAdminRoleExists = await roleManager.RoleExistsAsync("Admin");
             var isUserExists = await userManager.FindByEmailAsync("admin@gmail.com");
-            
-            if(isRoleExists == false || isUserExists == null)
+            var isModaretorRoleExists = await roleManager.RoleExistsAsync("Modaretor");
+
+            if (isAdminRoleExists == false || isUserExists == null)
             {
-                if (isRoleExists == false)
+                if (isAdminRoleExists == false)
                 {
-                    var role = new IdentityRole
+                    var AdminRole = new IdentityRole
                     {
                         Name = "Admin"
                     };
-                    await roleManager.CreateAsync(role);
+                    await roleManager.CreateAsync(AdminRole);
+                   
+                }
+
+                if (isModaretorRoleExists == false)
+                {
+                    var ModaretorRole = new IdentityRole
+                    {
+                        Name = "Modaretor"
+                    };
+                    await roleManager.CreateAsync(ModaretorRole);
+                }
+
+                if (isUserRoleExists == false)
+                {
+                    var UserRole = new IdentityRole
+                    {
+                        Name = "User"
+                    };
+                    await roleManager.CreateAsync(UserRole);
                 }
 
                 if (isUserExists == null)
@@ -119,7 +152,12 @@ namespace OnlineShop_API
                         UserName = "admin",
                         Email = "admin@mail.com"
                     };
-                    await userManager.CreateAsync(adminUser, "123456");
+
+                    var result = await userManager.CreateAsync(adminUser, "123456");
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(adminUser, "Admin");
+                    }
                 }
             }
         }

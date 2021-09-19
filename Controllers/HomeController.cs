@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop_API.IRepository;
 using System.Threading.Tasks;
 
 namespace OnlineShop_API.Controllers
@@ -7,10 +8,24 @@ namespace OnlineShop_API.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        public async Task<IActionResult> Get()
+        private readonly IProductRepository _repo;
+        public HomeController(IProductRepository repo)
         {
-            return Ok("<h1>Hello...</h1>");
+            _repo = repo;
         }
-  
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _repo.getAllProduct());
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOne([FromRoute] int id)
+        {
+            return Ok(await _repo.getOneProduct(id));
+        }
+
+
     }
 }
