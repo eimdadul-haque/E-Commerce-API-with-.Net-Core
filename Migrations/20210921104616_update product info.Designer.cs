@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop_API.Data;
 
 namespace OnlineShop_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210921104616_update product info")]
+    partial class updateproductinfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,39 +217,12 @@ namespace OnlineShop_API.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("OnlineShop_API.Models.OrderModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("orderModel");
-                });
-
             modelBuilder.Entity("OnlineShop_API.Models.ProductModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("OrderModelId")
-                        .HasColumnType("int");
 
                     b.Property<string>("productColor")
                         .HasColumnType("nvarchar(max)");
@@ -263,8 +238,6 @@ namespace OnlineShop_API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderModelId");
 
                     b.HasIndex("productTypeId");
 
@@ -339,10 +312,6 @@ namespace OnlineShop_API.Migrations
 
             modelBuilder.Entity("OnlineShop_API.Models.ProductModel", b =>
                 {
-                    b.HasOne("OnlineShop_API.Models.OrderModel", null)
-                        .WithMany("products")
-                        .HasForeignKey("OrderModelId");
-
                     b.HasOne("OnlineShop_API.Models.ProductTypeModel", "productType")
                         .WithMany()
                         .HasForeignKey("productTypeId")
@@ -350,11 +319,6 @@ namespace OnlineShop_API.Migrations
                         .IsRequired();
 
                     b.Navigation("productType");
-                });
-
-            modelBuilder.Entity("OnlineShop_API.Models.OrderModel", b =>
-                {
-                    b.Navigation("products");
                 });
 #pragma warning restore 612, 618
         }

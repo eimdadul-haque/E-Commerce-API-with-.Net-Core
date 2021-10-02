@@ -65,6 +65,7 @@ namespace OnlineShop_API
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
+            services.AddScoped<IOrederRepository, OrederRepository>();
 
 
             services.AddCors(options=>
@@ -86,7 +87,6 @@ namespace OnlineShop_API
             }
 
             app.UseRouting();
-            
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Images")),

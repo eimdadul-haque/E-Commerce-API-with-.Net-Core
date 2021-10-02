@@ -11,6 +11,7 @@ namespace OnlineShop_API.Models
         [Required]
         public string productName { get; set; }
         public string  productColor { get; set; }
+        public decimal  productPrice { get; set; }
         public int productTypeId { get; set; }
         [ForeignKey("productTypeId")]
         public ProductTypeModel productType { get; set; }
