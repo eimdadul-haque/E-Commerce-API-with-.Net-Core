@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop_API.Data;
 using OnlineShop_API.IRepository;
 using OnlineShop_API.Models;
-using System;
+using OnlineShop_API.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,27 +14,63 @@ namespace OnlineShop_API.Repository
     public class OrederRepository : IOrederRepository
     {
         private readonly ApplicationDbContext _db;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public OrederRepository(ApplicationDbContext db)
+        public OrederRepository(ApplicationDbContext db, UserManager<IdentityUser> userManager)
         {
             _db = db;
+            _userManager = userManager;
         }
 
+        
         public async Task<List<OrderModel>> GetAllOrder()
         {
-            return  await _db.orderModel.ToListAsync();
+            return await _db.orderModel.Include(c=>c.orderDetails).ThenInclude(c=>c.Product).ToListAsync();
         }
 
         public async Task<OrderModel> GetOneOrder(int? id)
         {
-            return await _db.orderModel.FindAsync(id);
+            return await _db.orderModel.Include(c => c.orderDetails).ThenInclude(c=>c.Product).FirstOrDefaultAsync(c=>c.Id == id);
              
         }
 
-        public async Task ReceiveOrder(OrderModel order)
+        
+        public async Task ReceiveOrder(OrderViewModels order)
         {
-            await _db.orderModel.AddAsync(order);
+            var orderModel = new OrderModel
+            {
+                UserId = order.UserId,
+                Id = order.OrderId,
+                Name = order.Name,
+                Email = order.Email,
+                Phone = order.Phone,
+                Address = order.Address
+            };
+
+            await _db.orderModel.AddAsync(orderModel);
             await _db.SaveChangesAsync();
+            _db.Entry(orderModel).GetDatabaseValues();
+            if (orderModel.Id != 0)
+            {
+               await OrderDetails(orderModel.Id, order);
+            }
+        }
+
+        public async Task OrderDetails(int id, OrderViewModels Order)
+        {
+            foreach (var item in Order.Products)
+            {
+                var details = new OrderDetailsModel
+                {
+                    OrderId = id,
+                    ProductId = item.id,
+                    Qty = item.Qty
+                };
+                await _db.orderDetailsModel.AddAsync(details);
+                await _db.SaveChangesAsync();
+                _db.ChangeTracker.Clear();
+            }
+           
         }
 
         public async Task DeleteOrder(int? id)

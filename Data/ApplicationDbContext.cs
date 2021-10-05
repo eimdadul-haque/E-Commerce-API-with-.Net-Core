@@ -14,5 +14,6 @@ namespace OnlineShop_API.Data
         public DbSet<ProductModel> product { get; set; }
         public DbSet<ProductTypeModel> productType { get; set; }
         public DbSet<OrderModel> orderModel { get; set; }
+        public DbSet<OrderDetailsModel> orderDetailsModel { get; set; }
     }
 }

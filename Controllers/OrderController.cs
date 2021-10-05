@@ -1,28 +1,38 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShop_API.IRepository;
 using OnlineShop_API.Models;
+using OnlineShop_API.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace OnlineShop_API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class OrderController : ControllerBase
     {
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly IOrederRepository _repo;
      
-        public OrderController(IOrederRepository repo)
+        public OrderController(IOrederRepository repo, UserManager<IdentityUser> userManager)
         {
             _repo = repo;
+            _userManager = userManager;
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetAllOrder()
         {
             return Ok(await _repo.GetAllOrder());
         }
 
-        public async Task<IActionResult> GetOneOrder(int? id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOneOrder([FromRoute]int? id)
         {
             if (id != null)
             {
@@ -32,10 +42,15 @@ namespace OnlineShop_API.Controllers
             return Ok(NoContent());
         }
 
-        public async Task<IActionResult> ReceiveOrder(OrderModel order)
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ReceiveOrder([FromBody]OrderViewModels order)
         {
             if (ModelState.IsValid)
             {
+                string userNmae = User.FindFirst(ClaimTypes.Name)?.Value;
+                var userInfo = await _userManager.FindByNameAsync(userNmae);
+                order.UserId = userInfo.Id;
                 await _repo.ReceiveOrder(order);
             }
             return Ok();

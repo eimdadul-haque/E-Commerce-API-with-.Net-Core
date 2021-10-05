@@ -41,7 +41,10 @@ namespace OnlineShop_API
                 option.Password.RequireLowercase = false;
                 option.Password.RequiredUniqueChars = 0;
             });
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(option =>
+                option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            
             services.AddAuthentication(option =>
             {
                 option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
