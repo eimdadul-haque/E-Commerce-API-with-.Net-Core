@@ -14,6 +14,7 @@ namespace OnlineShop_API.IRepository
         Task ReceiveOrder(OrderViewModels order);
         Task DeleteOrder(int? id);
         string Status(int code);
+
     }
     
 }

@@ -12,5 +12,7 @@ namespace OnlineShop_API.IRepository
         Task<List<ProductModel>> getAllProduct();
         Task<ProductModel> getOneProduct(int id);
         Task<List<ProductModel>> Search(string query);
+        Task<List<ProductModel>> GetProByType(int id);
+        Task<List<ProductTypeModel>> GetAllType();
     }
 }

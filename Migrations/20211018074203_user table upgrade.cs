@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnlineShop_API.Migrations
 {
-    public partial class IdentityTableadded : Migration
+    public partial class usertableupgrade : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,6 +26,8 @@ namespace OnlineShop_API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    firstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    lastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -44,6 +46,37 @@ namespace OnlineShop_API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "orderModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrderTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_orderModel", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "productType",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    type = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_productType", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,6 +185,56 @@ namespace OnlineShop_API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "product",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    productName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    productQty = table.Column<int>(type: "int", nullable: false),
+                    imageName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    productPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    productTypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_product", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_product_productType_productTypeId",
+                        column: x => x.productTypeId,
+                        principalTable: "productType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "orderDetailsModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Qty = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_orderDetailsModel", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_orderDetailsModel_orderModel_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "orderModel",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_orderDetailsModel_product_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -190,6 +273,21 @@ namespace OnlineShop_API.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_orderDetailsModel_OrderId",
+                table: "orderDetailsModel",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_orderDetailsModel_ProductId",
+                table: "orderDetailsModel",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_product_productTypeId",
+                table: "product",
+                column: "productTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -210,10 +308,22 @@ namespace OnlineShop_API.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "orderDetailsModel");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "orderModel");
+
+            migrationBuilder.DropTable(
+                name: "product");
+
+            migrationBuilder.DropTable(
+                name: "productType");
         }
     }
 }

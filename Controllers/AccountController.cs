@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using OnlineShop_API.Models;
+using OnlineShop_API.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,27 +17,30 @@ namespace OnlineShop_API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly IConfiguration _Configuration;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration)
+        public AccountController(RoleManager<IdentityRole> roleManager,UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configuration)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _Configuration = configuration;
+            _roleManager = roleManager;
         }
 
-        [HttpGet("login")]
-        public async Task<IActionResult> Login()
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody]LoginViewModels login)
         {
-            var result = await _signInManager.PasswordSignInAsync("eimdadul", "123456", false, false);
+            var result = await _signInManager.PasswordSignInAsync(login.username, login.password, false, false);
             if (result.Succeeded)
             {
 
                 var authClaim = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, "eimdadul"),
+                new Claim(ClaimTypes.Name,login.username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -50,27 +55,36 @@ namespace OnlineShop_API.Controllers
                signingCredentials: new SigningCredentials(signInKey, SecurityAlgorithms.HmacSha256)
                );
 
-                var user = await _userManager.FindByNameAsync("eimdadul");
+                var user = await _userManager.FindByNameAsync(login.username);
+                var useRole = await _roleManager.FindByNameAsync(login.username);
+
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     userName = user.UserName,
                     userId = user.Id,
-                    expires = DateTime.Now.AddDays(1)
+                    userRole = useRole,
+                    expires = DateTime.Now.AddDays(1),
+                    fname = user.firstName,
+                    lname = user.lastName
+
                 });
             }
             return Unauthorized();
         }
 
-        [HttpGet("signup")]
-        public async Task<IActionResult> Signup()
+        [HttpPost("signup")]
+        public async Task<IActionResult> Signup([FromBody]SignupViewModel signUp)
         {
-            var user = new IdentityUser
+            var user = new AppUser
             {
-                UserName = "eimdadul",
-                Email = "eimadadul@mail.com"
+                UserName = signUp.userName,
+                Email = signUp.email,
+                firstName = signUp.firstName,
+                lastName = signUp.lastName,
+
             };
-            var result = await _userManager.CreateAsync(user, "123456");
+            var result = await _userManager.CreateAsync(user, signUp.password);
             return Ok(result);
         }
     }

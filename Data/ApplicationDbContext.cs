@@ -4,7 +4,7 @@ using OnlineShop_API.Models;
 
 namespace OnlineShop_API.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
         {

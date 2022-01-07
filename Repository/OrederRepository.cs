@@ -14,9 +14,9 @@ namespace OnlineShop_API.Repository
     public class OrederRepository : IOrederRepository
     {
         private readonly ApplicationDbContext _db;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public OrederRepository(ApplicationDbContext db, UserManager<IdentityUser> userManager)
+        public OrederRepository(ApplicationDbContext db, UserManager<AppUser> userManager)
         {
             _db = db;
             _userManager = userManager;
@@ -25,12 +25,12 @@ namespace OnlineShop_API.Repository
         
         public async Task<List<OrderModel>> GetAllOrder()
         {
-            return await _db.orderModel.Include(c=>c.orderDetails).ThenInclude(c=>c.Product).ToListAsync();
+            return await _db.orderModel.Include(c=>c.orderDetails).ThenInclude(c=>c.Product).ThenInclude(c=>c.productType).ToListAsync();
         }
 
         public async Task<OrderModel> GetOneOrder(int? id)
         {
-            return await _db.orderModel.Include(c => c.orderDetails).ThenInclude(c=>c.Product).FirstOrDefaultAsync(c=>c.Id == id);
+            return await _db.orderModel.Include(c => c.orderDetails).ThenInclude(c=>c.Product).ThenInclude(c=>c.productType).FirstOrDefaultAsync(c=>c.Id == id);
              
         }
 

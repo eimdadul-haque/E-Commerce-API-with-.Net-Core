@@ -16,10 +16,10 @@ namespace OnlineShop_API.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IOrederRepository _repo;
      
-        public OrderController(IOrederRepository repo, UserManager<IdentityUser> userManager)
+        public OrderController(IOrederRepository repo, UserManager<AppUser> userManager)
         {
             _repo = repo;
             _userManager = userManager;
@@ -27,7 +27,7 @@ namespace OnlineShop_API.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAllOrder()
-        {
+       {
             return Ok(await _repo.GetAllOrder());
         }
 

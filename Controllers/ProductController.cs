@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop_API.IRepository;
 using OnlineShop_API.Models;
@@ -29,8 +30,8 @@ namespace OnlineShop_API.Controllers
 
 
         [HttpPost]
-       // [Authorize]
-        public async Task<IActionResult> AddProduct([FromBody] ProductModel product)
+        [Authorize(Roles ="admin"+","+"modaretor")]
+        public async Task<IActionResult> AddProduct([FromForm] ProductModel product)
         {
             if (ModelState.IsValid)
             {

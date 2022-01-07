@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using OnlineShop_API.Data;
 using OnlineShop_API.IRepository;
+using OnlineShop_API.Models;
 using OnlineShop_API.Repository;
 using System;
 using System.IO;
@@ -30,7 +31,7 @@ namespace OnlineShop_API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionStrings")));
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             services.Configure<IdentityOptions>(option=> 
             {
                 option.Password.RequireDigit = false;
@@ -68,7 +69,7 @@ namespace OnlineShop_API
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
-            services.AddScoped<IOrederRepository, OrederRepository>();
+            services.AddScoped<IOrederRepository, OrederRepository>(); 
 
 
             services.AddCors(options=>
@@ -109,7 +110,7 @@ namespace OnlineShop_API
 
         public async Task createAdmin(IServiceProvider service)
         {
-            var userManager = service.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = service.GetRequiredService<UserManager<AppUser>>();
             var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
 
 
@@ -150,8 +151,10 @@ namespace OnlineShop_API
 
                 if (isUserExists == null)
                 {
-                    var adminUser = new IdentityUser
+                    var adminUser = new AppUser
                     {
+                        firstName="Author",
+                        lastName= "Author",
                         UserName = "admin",
                         Email = "admin@mail.com"
                     };
