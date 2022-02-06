@@ -1,0 +1,55 @@
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\appsettings.json
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\OnlineShop API.exe
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\OnlineShop API.deps.json
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\OnlineShop API.runtimeconfig.json
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\OnlineShop API.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\ref\OnlineShop API.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\OnlineShop API.pdb
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\OnlineShop API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\OnlineShop API.AssemblyInfoInputs.cache
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\OnlineShop API.AssemblyInfo.cs
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\OnlineShop API.csproj.CoreCompileInputs.cache
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\OnlineShop API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\scopedcss\bundle\OnlineShop API.styles.css
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\OnlineShop API.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\ref\OnlineShop API.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\OnlineShop API.pdb
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\OnlineShop API.genruntimeconfig.cache
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Humanizer.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\System.Drawing.Common.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\System.Runtime.Caching.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\System.Security.Permissions.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\System.Windows.Extensions.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\OnlineShop API.csproj.CopyComplete
+C:\Users\EIMDADUL\Desktop\OnlineShop API\obj\Debug\net6.0\OnlineShop API.csproj.AssemblyReference.cache

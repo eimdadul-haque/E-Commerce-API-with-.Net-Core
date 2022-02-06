@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShop_API.IRepository;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using OnlineShop_API.Data;
+using OnlineShop_API.Models;
 
 namespace OnlineShop_API.Controllers
 {
@@ -8,30 +10,21 @@ namespace OnlineShop_API.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        private readonly IProductRepository _repo;
-        public HomeController(IProductRepository repo)
+        private readonly ApplicationDbContext _context;
+        public HomeController(ApplicationDbContext context)
         {
-            _repo = repo;
+            _context = context;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<List<ProductModel>>> get()
         {
-            return Ok(await _repo.getAllProduct());
+            return Ok(await _context.productD.ToListAsync());
         }
 
-        [HttpGet("{get-by-category}/{id}")]
-        public async Task<IActionResult> GetbyCategorey([FromRoute] int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductModel>> get([FromRoute]int id)
         {
-            return Ok(await _repo.GetProByType(id));
+            return Ok(await _context.productD.FindAsync(id));
         }
-
-
-        [HttpGet("categorey")]
-        public async Task<IActionResult> Categoreys()
-        {
-            return Ok(await _repo.GetAllType());
-        }
-
     }
 }

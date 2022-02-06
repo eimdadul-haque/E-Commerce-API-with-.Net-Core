@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using OnlineShop_API.IRepository;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using OnlineShop_API.Data;
 using OnlineShop_API.Models;
 
 namespace OnlineShop_API.Controllers
@@ -10,68 +9,65 @@ namespace OnlineShop_API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductRepository _repo;
-        public ProductController(IProductRepository repo)
+        private ApplicationDbContext _db;
+        public ProductController(ApplicationDbContext db)
         {
-            _repo = repo;
+            _db = db;
         }
 
+        // GET: api/<ProductController>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<List<ProductModel>>> Get()
         {
-            return Ok(await _repo.getAllProduct());
+            return Ok(await _db.productD.ToListAsync());
         }
 
+        // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetOne([FromRoute]int id)
+        public async Task<ActionResult<ProductModel>> Get(int id)
         {
-            return Ok(await _repo.getOneProduct(id));
+            return Ok(await _db.productD.FindAsync(id));
         }
 
-
+        // POST api/<ProductController>
         [HttpPost]
-        [Authorize(Roles ="admin"+","+"modaretor")]
-        public async Task<IActionResult> AddProduct([FromForm] ProductModel product)
+        public async Task<ActionResult> Post([FromBody] ProductModel productModel )
         {
             if (ModelState.IsValid)
             {
-                await _repo.addProduct(product);
-                return Ok();
+               await _db.productD.AddAsync(productModel);
+                await _db.SaveChangesAsync();
+                return Ok("Ok");
             }
-
-            return Ok(ModelState);
+            return Ok("Model not valid");
         }
 
-        [HttpPut]
-       // [Authorize]
-        public async Task<IActionResult> EditProduct([FromBody]ProductModel product)
+        // PUT api/<ProductController>/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(int id, [FromBody] ProductModel productModel)
         {
             if (ModelState.IsValid)
             {
-                await _repo.editProduct(product);
-                return Ok();
+                _db.productD.Update(productModel);
+                await _db.SaveChangesAsync();
+                return Ok("Ok");
             }
 
-            return Ok(ModelState);
+            return Ok("Model not valid");
         }
 
-      //  [Authorize]
+        // DELETE api/<ProductController>/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute]int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            if (ModelState.IsValid)
+            var item = await _db.productD.FindAsync(id);
+            if (item != null)
             {
-                await _repo.deleteProduct(id);
-                return Ok();
+                _db.productD.Remove(item);
+                await _db.SaveChangesAsync();
+                return Ok("Ok");
             }
-
-            return Ok(ModelState);
-        }
-
-        [HttpGet("search")]
-        public async Task<IActionResult> Search([FromQuery]string query)
-        {
-            return Ok (await _repo.Search(query));
+            return Ok("Product not found");
         }
     }
 }
