@@ -11,5 +11,6 @@ namespace OnlineShop_API.Data
         }
 
         public DbSet<ProductModel> productD { get; set; }
+        public DbSet<ProductTypeModel>  productTypeD { get; set; }
     }
 }

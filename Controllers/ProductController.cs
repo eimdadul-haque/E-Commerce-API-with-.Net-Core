@@ -19,7 +19,7 @@ namespace OnlineShop_API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ProductModel>>> Get()
         {
-            return Ok(await _db.productD.ToListAsync());
+            return Ok(await _db.productD.Include(c=>c.productType).ToListAsync());
         }
 
         // GET api/<ProductController>/5

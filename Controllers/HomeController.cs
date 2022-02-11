@@ -18,13 +18,30 @@ namespace OnlineShop_API.Controllers
 
         public async Task<ActionResult<List<ProductModel>>> get()
         {
-            return Ok(await _context.productD.ToListAsync());
+            return Ok(await _context.productD.Include(c=>c.productType).ToListAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductModel>> get([FromRoute]int id)
         {
             return Ok(await _context.productD.FindAsync(id));
+        }
+
+
+        [HttpGet("prduct-category")]
+        public async Task<ActionResult<List<ProductModel>>> prductByCategory([FromQuery] string category)
+        {
+            if (category != null)
+            {
+                return Ok( await _context.productD.Where(c => c.productType.type == category).ToListAsync());
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<List<ProductModel>>> search(string query)
+        {
+            return Ok(_context.productD.Select(x => x.name.Contains(query)));
         }
     }
 }
